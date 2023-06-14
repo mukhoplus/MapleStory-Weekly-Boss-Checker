@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/Main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <!-- Toolbar -->
     <LinearLayout
+        android:id="@+id/Header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="@android:dimen/app_icon_size"
@@ -36,7 +38,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="95dp"
-        android:layout_weight="@android:dimen/system_app_widget_inner_radius" />
+        android:layout_weight="?android:attr/actionBarSize" />
 
     <ScrollView
         android:id="@+id/MainView"
@@ -45,11 +47,13 @@
         android:layout_weight="1">
 
         <LinearLayout
+            android:id="@+id/MainLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/SubLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
                 android:layout_weight="@android:dimen/thumbnail_height"
@@ -94,6 +98,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/SubLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
                 android:layout_weight="@android:dimen/thumbnail_height"
@@ -138,6 +143,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/SubLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
                 android:layout_weight="@android:dimen/thumbnail_height"
@@ -182,6 +188,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/SubLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
                 android:layout_weight="@android:dimen/thumbnail_height"
