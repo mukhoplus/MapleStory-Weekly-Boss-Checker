@@ -10,8 +10,8 @@
     <LinearLayout
         android:id="@+id/Header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="@android:dimen/app_icon_size"
+        android:layout_height="60dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <ImageView
@@ -25,20 +25,13 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
+            android:layout_height="match_parent"
             android:background="#AD2312"
             android:elevation="4dp"
             app:title="  메이플스토리 주간 보스 체커"
             app:titleTextColor="@android:color/white" />
 
     </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="95dp"
-        android:layout_weight="?android:attr/actionBarSize" />
 
     <ScrollView
         android:id="@+id/MainView"
@@ -55,8 +48,8 @@
             <LinearLayout
                 android:id="@+id/SubLayout1"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_weight="@android:dimen/thumbnail_height"
+                android:layout_height="150dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <ImageButton
@@ -86,6 +79,15 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/cygnus" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/SubLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
                 <ImageButton
                     android:id="@+id/zakum"
                     android:layout_width="wrap_content"
@@ -94,15 +96,6 @@
                     android:contentDescription="@string/zakum"
                     android:scaleType="centerCrop"
                     android:src="@drawable/zakum" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/SubLayout2"
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_weight="@android:dimen/thumbnail_height"
-                android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/pierre"
@@ -122,6 +115,15 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/banban" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/SubLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
                 <ImageButton
                     android:id="@+id/bloodyqueen"
                     android:layout_width="wrap_content"
@@ -140,15 +142,6 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/bellum" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/SubLayout3"
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_weight="@android:dimen/thumbnail_height"
-                android:orientation="horizontal">
-
                 <ImageButton
                     android:id="@+id/magnus"
                     android:layout_width="wrap_content"
@@ -157,6 +150,15 @@
                     android:contentDescription="@string/magnus"
                     android:scaleType="centerCrop"
                     android:src="@drawable/magnus" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/SubLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/papulatus"
@@ -168,15 +170,6 @@
                     android:src="@drawable/papulatus" />
 
                 <ImageButton
-                    android:id="@+id/su"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/su"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/su" />
-
-                <ImageButton
                     android:id="@+id/damian"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -185,13 +178,21 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/damian" />
 
+                <ImageButton
+                    android:id="@+id/su"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/su"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/su" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/SubLayout4"
+                android:id="@+id/SubLayout5"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_weight="@android:dimen/thumbnail_height"
+                android:layout_height="150dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <ImageButton

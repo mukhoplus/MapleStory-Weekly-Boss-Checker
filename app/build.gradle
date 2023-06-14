@@ -18,10 +18,6 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
-
-        aaptOptions {
-            noCompress 'webp'
-        }
     }
 
     buildTypes {
