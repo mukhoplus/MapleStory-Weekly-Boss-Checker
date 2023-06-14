@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">MapleStory Weekly Boss Checker</string>
+    <string name="maplestory">maplestory</string>
+    <string name="hilla">hilla</string>
+    <string name="pinkbean">pinkbean</string>
+    <string name="cygnus">cygnus</string>
+    <string name="zakum">zakum</string>
+    <string name="pierre">pierre</string>
+    <string name="banban">banban</string>
+    <string name="bloodyqueen">bloodyqueen</string>
+    <string name="bellum">bellum</string>
+    <string name="magnus">magnus</string>
+    <string name="papulatus">papulatus</string>
+    <string name="su">su</string>
+    <string name="damian">damian</string>
+    <string name="lucid">lucid</string>
+    <string name="will">will</string>
+    <string name="guardianangelslime">guardianangelslime</string>
 </resources>
