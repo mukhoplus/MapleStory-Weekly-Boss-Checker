@@ -35,7 +35,7 @@ class MapleDayEvent (context: Context, params: WorkerParameters) : CoroutineWork
 
         WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
             "mapleDayEvent",
-            ExistingPeriodicWorkPolicy.REPLACE,
+            ExistingPeriodicWorkPolicy.KEEP,
             workRequest
         )
 
