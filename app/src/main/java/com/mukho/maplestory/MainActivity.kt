@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.os.Build
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -15,9 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
-import com.mukho.maplestory.util.MapleDayEvent
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -37,7 +36,59 @@ class MainActivity : AppCompatActivity() {
         // Notification
         private const val CHANNEL_ID = "Mukho I/O"
         private const val NOTIFICATION_ID = 1
+
+        // Status
+        private const val SHARED_PREFS_NAME = "MyPrefs"
+        private const val HILLA_ENABLED_KEY = "hillaEnabled"
+        private const val PINKBEAN_ENABLED_KEY = "pinkbeanEnabled"
+        private const val CYGNUS_ENABLED_KEY = "cygnusEnabled"
+        private const val ZAKUM_ENABLED_KEY = "zakumEnabled"
+        private const val BLOODYQUEEN_ENABLED_KEY = "bloodyqueenEnabled"
+        private const val BANBAN_ENABLED_KEY = "banbanEnabled"
+        private const val PIERRE_ENABLED_KEY = "pierreEnabled"
+        private const val MAGNUS_ENABLED_KEY = "magnusEnabled"
+        private const val BELLUM_ENABLED_KEY = "bellumEnabled"
+        private const val PAPULATUS_ENABLED_KEY = "papulatusEnabled"
+        private const val SU_ENABLED_KEY = "suEnabled"
+        private const val DAMIAN_ENABLED_KEY = "damianEnabled"
+        private const val GUARDIANANGELSLIME_ENABLED_KEY = "guardianangelslimeEnabled"
+        private const val LUCID_ENABLED_KEY = "lucidEnabled"
+        private const val WILL_ENABLED_KEY = "willEnabled"
+        private const val MESO_VALUE_KEY = "meso"
     }
+
+    private var isHillaEnabled: Boolean = true
+    private var isPinkbeanEnabled: Boolean = true
+    private var isCygnusEnabled: Boolean = true
+    private var isZakumEnabled: Boolean = true
+    private var isBloodyqueenEnabled: Boolean = true
+    private var isBanbanEnabled: Boolean = true
+    private var isPierreEnabled: Boolean = true
+    private var isMagnusEnabled: Boolean = true
+    private var isBellumEnabled: Boolean = true
+    private var isPapulatusEnabled: Boolean = true
+    private var isSuEnabled: Boolean = true
+    private var isDamianEnabled: Boolean = true
+    private var isGuardianangelslimeEnabled: Boolean = true
+    private var isLucidEnabled: Boolean = true
+    private var isWillEnabled: Boolean = true
+
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var hillaButton: ImageButton
+    private lateinit var pinkbeanButton: ImageButton
+    private lateinit var cygnusButton: ImageButton
+    private lateinit var zakumButton: ImageButton
+    private lateinit var bloodyqueenButton: ImageButton
+    private lateinit var banbanButton: ImageButton
+    private lateinit var pierreButton: ImageButton
+    private lateinit var magnusButton: ImageButton
+    private lateinit var bellumButton: ImageButton
+    private lateinit var papulatusButton: ImageButton
+    private lateinit var suButton: ImageButton
+    private lateinit var damianButton: ImageButton
+    private lateinit var guardianangelslimeButton: ImageButton
+    private lateinit var lucidButton: ImageButton
+    private lateinit var willButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Run Application
@@ -46,28 +97,33 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         run()
         createNotificationChannel()
+        sharedPreferences = getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
+
         instance = this
 
         // Thursday Reset Event
-        val mapleDayEventRequest = OneTimeWorkRequest.Builder(MapleDayEvent::class.java).build()
-        WorkManager.getInstance(this).enqueue(mapleDayEventRequest)
+        // val mapleDayEventRequest = OneTimeWorkRequest.Builder(MapleDayEvent::class.java).build()
+        // WorkManager.getInstance(this).enqueue(mapleDayEventRequest)
+        findViewById<Button>(R.id.customResetButton).setOnClickListener {
+            thursdayReset()
+        }
 
         // ImageButton
-        val hillaButton = findViewById<ImageButton>(R.id.hilla)
-        val pinkbeanButton = findViewById<ImageButton>(R.id.pinkbean)
-        val cygnusButton = findViewById<ImageButton>(R.id.cygnus)
-        val zakumButton = findViewById<ImageButton>(R.id.zakum)
-        val bloodyqueenButton = findViewById<ImageButton>(R.id.bloodyqueen)
-        val banbanButton = findViewById<ImageButton>(R.id.banban)
-        val pierreButton = findViewById<ImageButton>(R.id.pierre)
-        val magnusButton = findViewById<ImageButton>(R.id.magnus)
-        val bellumButton = findViewById<ImageButton>(R.id.bellum)
-        val papulatusButton = findViewById<ImageButton>(R.id.papulatus)
-        val suButton = findViewById<ImageButton>(R.id.su)
-        val damianButton = findViewById<ImageButton>(R.id.damian)
-        val guardianangelslimeButton = findViewById<ImageButton>(R.id.guardianangelslime)
-        val lucidButton = findViewById<ImageButton>(R.id.lucid)
-        val willButton = findViewById<ImageButton>(R.id.will)
+        hillaButton = findViewById(R.id.hilla)
+        pinkbeanButton = findViewById(R.id.pinkbean)
+        cygnusButton = findViewById(R.id.cygnus)
+        zakumButton = findViewById(R.id.zakum)
+        bloodyqueenButton = findViewById(R.id.bloodyqueen)
+        banbanButton = findViewById(R.id.banban)
+        pierreButton = findViewById(R.id.pierre)
+        magnusButton = findViewById(R.id.magnus)
+        bellumButton = findViewById(R.id.bellum)
+        papulatusButton = findViewById(R.id.papulatus)
+        suButton = findViewById(R.id.su)
+        damianButton = findViewById(R.id.damian)
+        guardianangelslimeButton = findViewById(R.id.guardianangelslime)
+        lucidButton = findViewById(R.id.lucid)
+        willButton = findViewById(R.id.will)
 
         // ImageButton Handler
         hillaButton.setOnClickListener {
@@ -148,13 +204,122 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+
+        // Save the current state
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(HILLA_ENABLED_KEY, hillaButton.isEnabled)
+        editor.putBoolean(PINKBEAN_ENABLED_KEY, pinkbeanButton.isEnabled)
+        editor.putBoolean(CYGNUS_ENABLED_KEY, cygnusButton.isEnabled)
+        editor.putBoolean(ZAKUM_ENABLED_KEY, zakumButton.isEnabled)
+        editor.putBoolean(BLOODYQUEEN_ENABLED_KEY, bloodyqueenButton.isEnabled)
+        editor.putBoolean(BANBAN_ENABLED_KEY, banbanButton.isEnabled)
+        editor.putBoolean(PIERRE_ENABLED_KEY, pierreButton.isEnabled)
+        editor.putBoolean(MAGNUS_ENABLED_KEY, magnusButton.isEnabled)
+        editor.putBoolean(BELLUM_ENABLED_KEY, bellumButton.isEnabled)
+        editor.putBoolean(PAPULATUS_ENABLED_KEY, papulatusButton.isEnabled)
+        editor.putBoolean(SU_ENABLED_KEY, suButton.isEnabled)
+        editor.putBoolean(DAMIAN_ENABLED_KEY, damianButton.isEnabled)
+        editor.putBoolean(GUARDIANANGELSLIME_ENABLED_KEY, guardianangelslimeButton.isEnabled)
+        editor.putBoolean(LUCID_ENABLED_KEY, lucidButton.isEnabled)
+        editor.putBoolean(WILL_ENABLED_KEY, willButton.isEnabled)
+        editor.putInt(MESO_VALUE_KEY, meso)
+        editor.apply()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Restore the saved state
+        isHillaEnabled = sharedPreferences.getBoolean(HILLA_ENABLED_KEY, true)
+        isPinkbeanEnabled = sharedPreferences.getBoolean(PINKBEAN_ENABLED_KEY, true)
+        isCygnusEnabled = sharedPreferences.getBoolean(CYGNUS_ENABLED_KEY, true)
+        isZakumEnabled = sharedPreferences.getBoolean(ZAKUM_ENABLED_KEY, true)
+        isBloodyqueenEnabled = sharedPreferences.getBoolean(BLOODYQUEEN_ENABLED_KEY, true)
+        isBanbanEnabled = sharedPreferences.getBoolean(BANBAN_ENABLED_KEY, true)
+        isPierreEnabled = sharedPreferences.getBoolean(PIERRE_ENABLED_KEY, true)
+        isMagnusEnabled = sharedPreferences.getBoolean(MAGNUS_ENABLED_KEY, true)
+        isBellumEnabled = sharedPreferences.getBoolean(BELLUM_ENABLED_KEY, true)
+        isPapulatusEnabled = sharedPreferences.getBoolean(PAPULATUS_ENABLED_KEY, true)
+        isSuEnabled = sharedPreferences.getBoolean(SU_ENABLED_KEY, true)
+        isDamianEnabled = sharedPreferences.getBoolean(DAMIAN_ENABLED_KEY, true)
+        isGuardianangelslimeEnabled = sharedPreferences.getBoolean(GUARDIANANGELSLIME_ENABLED_KEY, true)
+        isLucidEnabled = sharedPreferences.getBoolean(LUCID_ENABLED_KEY, true)
+        isWillEnabled = sharedPreferences.getBoolean(WILL_ENABLED_KEY, true)
+        meso = sharedPreferences.getInt(MESO_VALUE_KEY, 0)
+
+        hillaButton.isEnabled = isHillaEnabled
+        pinkbeanButton.isEnabled = isPinkbeanEnabled
+        cygnusButton.isEnabled = isCygnusEnabled
+        zakumButton.isEnabled = isZakumEnabled
+        bloodyqueenButton.isEnabled = isBloodyqueenEnabled
+        banbanButton.isEnabled = isBanbanEnabled
+        pierreButton.isEnabled = isPierreEnabled
+        magnusButton.isEnabled = isMagnusEnabled
+        bellumButton.isEnabled = isBellumEnabled
+        papulatusButton.isEnabled = isPapulatusEnabled
+        suButton.isEnabled = isSuEnabled
+        damianButton.isEnabled = isDamianEnabled
+        guardianangelslimeButton.isEnabled = isGuardianangelslimeEnabled
+        lucidButton.isEnabled = isLucidEnabled
+        willButton.isEnabled = isWillEnabled
+
+        updateMesoText()
+        if(!hillaButton.isEnabled) {
+            disableAndGrayscaleImageButton(hillaButton);
+        }
+        if(!pinkbeanButton.isEnabled) {
+            disableAndGrayscaleImageButton(pinkbeanButton);
+        }
+        if(!cygnusButton.isEnabled) {
+            disableAndGrayscaleImageButton(cygnusButton);
+        }
+        if(!zakumButton.isEnabled) {
+            disableAndGrayscaleImageButton(zakumButton);
+        }
+        if(!bloodyqueenButton.isEnabled) {
+            disableAndGrayscaleImageButton(bloodyqueenButton);
+        }
+        if(!banbanButton.isEnabled) {
+            disableAndGrayscaleImageButton(banbanButton);
+        }
+        if(!pierreButton.isEnabled) {
+            disableAndGrayscaleImageButton(pierreButton);
+        }
+        if(!magnusButton.isEnabled) {
+            disableAndGrayscaleImageButton(magnusButton);
+        }
+        if(!bellumButton.isEnabled) {
+            disableAndGrayscaleImageButton(bellumButton);
+        }
+        if(!papulatusButton.isEnabled) {
+            disableAndGrayscaleImageButton(papulatusButton);
+        }
+        if(!suButton.isEnabled) {
+            disableAndGrayscaleImageButton(suButton);
+        }
+        if(!damianButton.isEnabled) {
+            disableAndGrayscaleImageButton(damianButton);
+        }
+        if(!guardianangelslimeButton.isEnabled) {
+            disableAndGrayscaleImageButton(guardianangelslimeButton);
+        }
+        if(!lucidButton.isEnabled) {
+            disableAndGrayscaleImageButton(lucidButton);
+        }
+        if(!willButton.isEnabled) {
+            disableAndGrayscaleImageButton(willButton);
+        }
+    }
+
     private fun run() {
         updateMesoText()
         initStoneMesoMap()
         Toast.makeText(this, "애플리케이션이 실행되었습니다.", Toast.LENGTH_SHORT).show()
         println("애플리케이션이 실행되었습니다.")
     }
-    
+
     private fun showToast(bossMessage: String) {
         Toast.makeText(this, "$bossMessage 잡았습니다.", Toast.LENGTH_SHORT).show()
         println("$bossMessage 잡았습니다.")
@@ -175,25 +340,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun resetButton() {
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.hilla))
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.pinkbean))
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.cygnus))
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.zakum))
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.bloodyqueen))
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.banban))
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.pierre))
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.magnus))
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.bellum))
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.papulatus))
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.su))
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.damian))
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.guardianangelslime))
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.lucid))
-        enableAndRestoreColorImageButton(findViewById<ImageButton>(R.id.will))
+        enableAndRestoreColorImageButton(findViewById(R.id.hilla))
+        enableAndRestoreColorImageButton(findViewById(R.id.pinkbean))
+        enableAndRestoreColorImageButton(findViewById(R.id.cygnus))
+        enableAndRestoreColorImageButton(findViewById(R.id.zakum))
+        enableAndRestoreColorImageButton(findViewById(R.id.bloodyqueen))
+        enableAndRestoreColorImageButton(findViewById(R.id.banban))
+        enableAndRestoreColorImageButton(findViewById(R.id.pierre))
+        enableAndRestoreColorImageButton(findViewById(R.id.magnus))
+        enableAndRestoreColorImageButton(findViewById(R.id.bellum))
+        enableAndRestoreColorImageButton(findViewById(R.id.papulatus))
+        enableAndRestoreColorImageButton(findViewById(R.id.su))
+        enableAndRestoreColorImageButton(findViewById(R.id.damian))
+        enableAndRestoreColorImageButton(findViewById(R.id.guardianangelslime))
+        enableAndRestoreColorImageButton(findViewById(R.id.lucid))
+        enableAndRestoreColorImageButton(findViewById(R.id.will))
     }
 
     // Meso Method
-    private var meso = 0
+    private var meso: Int = 0
 
     private val stoneMesoMap = mutableMapOf<String, Int>()
     private fun initStoneMesoMap() {
